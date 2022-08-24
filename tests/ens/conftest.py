@@ -10,11 +10,11 @@ from eth_utils import (
 )
 import pytest_asyncio
 
-from ens import (
-    ENS,
-    AsyncENS,
+from cns import (
+    CNS,
+    AsyncCNS,
 )
-from ens.contract_data import (
+from cns.contract_data import (
     extended_resolver_abi,
     extended_resolver_bytecode,
     extended_resolver_bytecode_runtime,
@@ -645,7 +645,7 @@ async def async_ens_setup(async_w3):
         reverse_tld_namehash, async_w3.keccak(text="addr"), reverse_registrar.address
     ).transact({"from": ens_key})
 
-    return AsyncENS.fromWeb3(async_w3, ens_contract.address)
+    return AsyncCNS.fromWeb3(async_w3, ens_contract.address)
 
 
 @pytest_asyncio.fixture

@@ -1,6 +1,6 @@
 import pytest
 
-from ens import (
+from cns import (
     InvalidName,
 )
 

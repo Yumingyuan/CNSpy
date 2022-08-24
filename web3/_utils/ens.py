@@ -18,7 +18,7 @@ from eth_utils import (
     is_hex_address,
 )
 
-from ens import ENS
+from cns import CNS
 from web3.exceptions import (
     NameNotFound,
 )
@@ -38,10 +38,10 @@ def is_ens_name(value: Any) -> bool:
     elif is_0x_prefixed(value) and is_hex(value):
         return False
     else:
-        return ENS.is_valid_name(value)
+        return CNS.is_valid_name(value)
 
 
-def validate_name_has_address(ens: ENS, name: str) -> ChecksumAddress:
+def validate_name_has_address(ens: CNS, name: str) -> ChecksumAddress:
     addr = ens.address(name)
     if addr:
         return addr

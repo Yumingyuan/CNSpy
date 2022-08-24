@@ -43,7 +43,7 @@ from hexbytes import (
     HexBytes,
 )
 
-from ens import ENS
+from cns import ENS
 from web3._utils.encoding import (
     hexstr_if_str,
     text_if_str,

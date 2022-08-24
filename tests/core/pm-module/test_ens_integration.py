@@ -4,7 +4,7 @@ from eth_utils import (
     to_bytes,
 )
 
-from ens import ENS
+from cns import ENS
 from ethpm import (
     ASSETS_DIR,
 )

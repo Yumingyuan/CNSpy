@@ -6,7 +6,7 @@ from eth_utils import (
     to_bytes,
 )
 
-from ens.utils import (
+from cns.utils import (
     ens_encode_name,
     init_async_web3,
     init_web3,

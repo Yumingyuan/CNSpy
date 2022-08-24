@@ -3,7 +3,7 @@ from unittest.mock import (
     patch,
 )
 
-from ens import ENS
+from cns import ENS
 from web3 import Web3
 
 

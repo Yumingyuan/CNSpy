@@ -4,7 +4,7 @@ from eth_tester.exceptions import (
     TransactionFailed,
 )
 
-from ens.exceptions import (
+from cns.exceptions import (
     ResolverNotFound,
     UnsupportedFunction,
 )

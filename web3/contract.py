@@ -150,7 +150,7 @@ from web3.utils import (
 )
 
 if TYPE_CHECKING:
-    from ens import ENS  # noqa: F401
+    from cns import CNS  # noqa: F401
     from web3 import Web3  # noqa: F401
 
 ACCEPTABLE_EMPTY_STRINGS = ["0x", b"0x", "", b""]
@@ -642,7 +642,7 @@ class Contract(BaseContract):
             )
 
         if address:
-            _ens = cast("ENS", _w3.ens)
+            _ens = cast("CNS", _w3.ens)
             self.address = normalize_address(_ens, address)
 
         if not self.address:

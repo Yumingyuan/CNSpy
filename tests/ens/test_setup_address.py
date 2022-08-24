@@ -11,10 +11,10 @@ from eth_utils import (
     to_bytes,
 )
 
-from ens import (
+from cns import (
     UnauthorizedError,
 )
-from ens.constants import (
+from cns.constants import (
     EMPTY_ADDR_HEX,
 )
 from web3 import Web3

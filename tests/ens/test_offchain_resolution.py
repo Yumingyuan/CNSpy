@@ -5,7 +5,7 @@ from aiohttp import (
 )
 import requests
 
-from ens.utils import (
+from cns.utils import (
     ens_encode_name,
 )
 from web3.exceptions import (
