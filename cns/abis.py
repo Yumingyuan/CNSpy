@@ -1,6 +1,6 @@
 # flake8: noqa
 
-ENS = [
+CNS = [
     {
         "constant": True,
         "inputs": [{"name": "node", "type": "bytes32"}],

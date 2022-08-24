@@ -1,8 +1,8 @@
 import decimal
 
-from ens import (
-    AsyncENS,
-    ENS,
+from cns import (
+    AsyncCNS,
+    CNS,
 )
 from eth_abi.codec import (
     ABICodec,
@@ -244,7 +244,7 @@ class Web3:
         external_modules: Optional[
             Dict[str, Union[Type[Module], Sequence[Any]]]
         ] = None,
-        ens: Union[ENS, AsyncENS, "Empty"] = empty,
+        ens: Union[CNS, AsyncCNS, "Empty"] = empty,
     ) -> None:
         self.manager = self.RequestManager(self, provider, middlewares)
         # this codec gets used in the module initialization,
@@ -345,14 +345,14 @@ class Web3:
         return self.codec.is_encodable(_type, value)
 
     @property
-    def ens(self) -> Union[ENS, AsyncENS, "Empty"]:
+    def ens(self) -> Union[CNS, AsyncCNS, "Empty"]:
         if self._ens is empty:
-            return AsyncENS.fromWeb3(self) if self.eth.is_async else ENS.fromWeb3(self)
+            return AsyncCNS.fromWeb3(self) if self.eth.is_async else CNS.fromWeb3(self)
 
         return self._ens
 
     @ens.setter
-    def ens(self, new_ens: Union[ENS, AsyncENS, "Empty"]) -> None:
+    def ens(self, new_ens: Union[CNS, AsyncCNS, "Empty"]) -> None:
         self._ens = new_ens
 
     @property

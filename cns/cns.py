@@ -29,29 +29,29 @@ from hexbytes import (
     HexBytes,
 )
 
-from ens import abis
-from ens.base_ens import (
-    BaseENS,
+from cns import abis
+from cns.base_cns import (
+    BaseCNS,
 )
-from ens.constants import (
+from cns.constants import (
     EMPTY_ADDR_HEX,
-    ENS_MAINNET_ADDR,
+    CNS_MAINNET_ADDR,
     EXTENDED_RESOLVER_INTERFACE_ID,
     GET_TEXT_INTERFACE_ID,
     REVERSE_REGISTRAR_DOMAIN,
 )
-from ens.exceptions import (
+from cns.exceptions import (
     AddressMismatch,
     ResolverNotFound,
     UnauthorizedError,
     UnownedName,
     UnsupportedFunction,
 )
-from ens.utils import (
+from cns.utils import (
     address_in,
     address_to_reverse_domain,
     default,
-    ens_encode_name,
+    cns_encode_name,
     init_web3,
     is_empty_name,
     is_none_or_zero_address,
@@ -75,7 +75,7 @@ if TYPE_CHECKING:
     )
 
 
-class ENS(BaseENS):
+class CNS(BaseCNS):
     """
     Quick access to common Ethereum Name Service functions,
     like getting the address for a name.
@@ -100,15 +100,15 @@ class ENS(BaseENS):
         """
         self.w3 = init_web3(provider, middlewares)
 
-        ens_addr = addr if addr else ENS_MAINNET_ADDR
-        self.ens = self.w3.eth.contract(abi=abis.ENS, address=ens_addr)
+        cns_addr = addr if addr else CNS_MAINNET_ADDR
+        self.cns = self.w3.eth.contract(abi=abis.CNS, address=cns_addr)
         self._resolver_contract = self.w3.eth.contract(abi=abis.RESOLVER)
         self._reverse_resolver_contract = self.w3.eth.contract(
             abi=abis.REVERSE_RESOLVER
         )
 
     @classmethod
-    def fromWeb3(cls, w3: "Web3", addr: ChecksumAddress = None) -> "ENS":
+    def fromWeb3(cls, w3: "Web3", addr: ChecksumAddress = None) -> "CNS":
         """
         Generate an ENS instance with web3
 
@@ -256,7 +256,7 @@ class ENS(BaseENS):
         :rtype: str
         """
         node = raw_name_to_hash(name)
-        return self.ens.caller.owner(node)
+        return self.cns.caller.owner(node)
 
     def setup_owner(
         self,
@@ -411,7 +411,7 @@ class ENS(BaseENS):
                 # will eventually be the empty string '' which returns here
                 return None, current_name
 
-            resolver_addr = self.ens.caller.resolver(normal_name_to_hash(current_name))
+            resolver_addr = self.cns.caller.resolver(normal_name_to_hash(current_name))
             if not is_none_or_zero_address(resolver_addr):
                 # if resolver found, return it
                 resolver = cast(
@@ -434,8 +434,8 @@ class ENS(BaseENS):
         if is_none_or_zero_address(resolver_addr):
             resolver_addr = self.address("resolver.eth")
         namehash = raw_name_to_hash(name)
-        if self.ens.caller.resolver(namehash) != resolver_addr:
-            self.ens.functions.setResolver(namehash, resolver_addr).transact(transact)
+        if self.cns.caller.resolver(namehash) != resolver_addr:
+            self.cns.functions.setResolver(namehash, resolver_addr).transact(transact)
         return cast("Contract", self._resolver_contract(address=resolver_addr))
 
     def _resolve(
@@ -455,7 +455,7 @@ class ENS(BaseENS):
 
             calldata = resolver.encodeABI(*contract_func_with_args)
             contract_call_result = resolver.caller.resolve(
-                ens_encode_name(normal_name), calldata
+                cns_encode_name(normal_name), calldata
             )
             result = self._decode_ensip10_resolve_data(
                 contract_call_result, resolver, fn_name
@@ -512,7 +512,7 @@ class ENS(BaseENS):
         transact = deepcopy(transact)
         transact["from"] = old_owner or owner
         for label in reversed(unowned):
-            self.ens.functions.setSubnodeOwner(
+            self.cns.functions.setSubnodeOwner(
                 raw_name_to_hash(owned), label_to_hash(label), owner
             ).transact(transact)
             owned = f"{label}.{owned}"
@@ -531,7 +531,7 @@ class ENS(BaseENS):
         return self._reverse_registrar().functions.setName(name).transact(transact)
 
     def _reverse_registrar(self) -> "Contract":
-        addr = self.ens.caller.owner(normal_name_to_hash(REVERSE_REGISTRAR_DOMAIN))
+        addr = self.cns.caller.owner(normal_name_to_hash(REVERSE_REGISTRAR_DOMAIN))
         return self.w3.eth.contract(address=addr, abi=abis.REVERSE_REGISTRAR)
 
 

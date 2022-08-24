@@ -15,7 +15,7 @@ from hexbytes import (
     HexBytes,
 )
 
-from ens.utils import (
+from cns.utils import (
     address_to_reverse_domain,
     get_abi_output_types,
     is_valid_name,
@@ -32,9 +32,9 @@ if TYPE_CHECKING:
     )
 
 
-class BaseENS:
+class BaseCNS:
     w3: "Web3" = None
-    ens: Union["Contract", "AsyncContract"] = None
+    cns: Union["Contract", "AsyncContract"] = None
     _resolver_contract: Union[Type["Contract"], Type["AsyncContract"]] = None
     _reverse_resolver_contract: Union[Type["Contract"], Type["AsyncContract"]] = None
 
@@ -85,7 +85,7 @@ class BaseENS:
         labels = name.split(".")
         return "" if len(labels) == 1 else ".".join(labels[1:])
 
-    def _decode_ensip10_resolve_data(
+    def _decode_cnsip10_resolve_data(
         self,
         contract_call_result: bytes,
         extended_resolver: Union["Contract", "AsyncContract"],

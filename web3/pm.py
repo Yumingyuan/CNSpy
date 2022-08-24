@@ -33,7 +33,7 @@ from eth_utils import (
     to_tuple,
 )
 
-from ens import ENS
+from cns import CNS
 from ethpm import (
     ASSETS_DIR,
     Package,

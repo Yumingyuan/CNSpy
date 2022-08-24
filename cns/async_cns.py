@@ -29,29 +29,29 @@ from hexbytes import (
     HexBytes,
 )
 
-from ens import abis
-from ens.base_ens import (
-    BaseENS,
+from cns import abis
+from cns.base_cns import (
+    BaseCNS,
 )
-from ens.constants import (
+from cns.constants import (
+    CNS_MAINNET_ADDR,
     EMPTY_ADDR_HEX,
-    ENS_MAINNET_ADDR,
     EXTENDED_RESOLVER_INTERFACE_ID,
     GET_TEXT_INTERFACE_ID,
     REVERSE_REGISTRAR_DOMAIN,
 )
-from ens.exceptions import (
+from cns.exceptions import (
     AddressMismatch,
     ResolverNotFound,
     UnauthorizedError,
     UnownedName,
     UnsupportedFunction,
 )
-from ens.utils import (
+from cns.utils import (
     address_in,
     address_to_reverse_domain,
     default,
-    ens_encode_name,
+    cns_encode_name,
     init_async_web3,
     is_empty_name,
     is_none_or_zero_address,
@@ -76,7 +76,7 @@ if TYPE_CHECKING:
     )
 
 
-class AsyncENS(BaseENS):
+class AsyncCNS(BaseCNS):
     """
     Quick access to common Ethereum Name Service functions,
     like getting the address for a name.
@@ -100,15 +100,15 @@ class AsyncENS(BaseENS):
         """
         self.w3 = init_async_web3(provider, middlewares)
 
-        ens_addr = addr if addr else ENS_MAINNET_ADDR
-        self.ens = self.w3.eth.contract(abi=abis.ENS, address=ens_addr)
+        cns_addr = addr if addr else CNS_MAINNET_ADDR
+        self.cns = self.w3.eth.contract(abi=abis.CNS, address=cns_addr)
         self._resolver_contract = self.w3.eth.contract(abi=abis.RESOLVER)
         self._reverse_resolver_contract = self.w3.eth.contract(
             abi=abis.REVERSE_RESOLVER
         )
 
     @classmethod
-    def fromWeb3(cls, w3: "Web3", addr: ChecksumAddress = None) -> "AsyncENS":
+    def fromWeb3(cls, w3: "Web3", addr: ChecksumAddress = None) -> "AsyncCNS":
         """
         Generate an AsyncENS instance with web3
 
@@ -260,7 +260,7 @@ class AsyncENS(BaseENS):
         :rtype: str
         """
         node = raw_name_to_hash(name)
-        return await self.ens.caller.owner(node)
+        return await self.cns.caller.owner(node)
 
     async def setup_owner(
         self,
@@ -420,7 +420,7 @@ class AsyncENS(BaseENS):
                 # will eventually be the empty string '' which returns here
                 return None, current_name
 
-            resolver_addr = await self.ens.caller.resolver(
+            resolver_addr = await self.cns.caller.resolver(
                 normal_name_to_hash(current_name)
             )
             if not is_none_or_zero_address(resolver_addr):
@@ -445,8 +445,8 @@ class AsyncENS(BaseENS):
         if is_none_or_zero_address(resolver_addr):
             resolver_addr = await self.address("resolver.eth")
         namehash = raw_name_to_hash(name)
-        if await self.ens.caller.resolver(namehash) != resolver_addr:
-            await self.ens.functions.setResolver(  # type: ignore
+        if await self.cns.caller.resolver(namehash) != resolver_addr:
+            await self.cns.functions.setResolver(  # type: ignore
                 namehash, resolver_addr
             ).transact(transact)
         return cast("AsyncContract", self._resolver_contract(address=resolver_addr))
@@ -472,9 +472,9 @@ class AsyncENS(BaseENS):
 
             calldata = resolver.encodeABI(*contract_func_with_args)
             contract_call_result = await resolver.caller.resolve(
-                ens_encode_name(normal_name), calldata
+                cns_encode_name(normal_name), calldata
             )
-            result = self._decode_ensip10_resolve_data(
+            result = self._decode_cnsip10_resolve_data(
                 contract_call_result, resolver, fn_name
             )
             return to_checksum_address(result) if is_address(result) else result
@@ -529,7 +529,7 @@ class AsyncENS(BaseENS):
         transact = deepcopy(transact)
         transact["from"] = old_owner or owner
         for label in reversed(unowned):
-            await self.ens.functions.setSubnodeOwner(  # type: ignore
+            await self.cns.functions.setSubnodeOwner(  # type: ignore
                 raw_name_to_hash(owned), label_to_hash(label), owner
             ).transact(transact)
             owned = f"{label}.{owned}"
@@ -549,7 +549,7 @@ class AsyncENS(BaseENS):
         return await reverse_registrar.functions.setName(name).transact(transact)  # type: ignore  # noqa: E501
 
     async def _reverse_registrar(self) -> "AsyncContract":
-        addr = await self.ens.caller.owner(
+        addr = await self.cns.caller.owner(
             normal_name_to_hash(REVERSE_REGISTRAR_DOMAIN)
         )
         return self.w3.eth.contract(address=addr, abi=abis.REVERSE_REGISTRAR)

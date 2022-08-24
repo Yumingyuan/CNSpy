@@ -34,8 +34,8 @@ from eth_utils.toolz import (
     valmap,
 )
 
-from ens.utils import (
-    is_valid_ens_name,
+from cns.utils import (
+    is_valid_cns_name,
 )
 from web3._utils.abi import (
     abi_to_signature,
@@ -163,8 +163,8 @@ def validate_address(value: Any) -> None:
     Helper function for validating an address
     """
     if is_not_address_string(value):
-        if not is_valid_ens_name(value):
-            raise InvalidAddress(f"ENS name: '{value}' is invalid.")
+        if not is_valid_cns_name(value):
+            raise InvalidAddress(f"CNS name: '{value}' is invalid.")
         return
     if is_bytes(value):
         if not is_binary_address(value):

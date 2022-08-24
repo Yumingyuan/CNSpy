@@ -16,7 +16,7 @@ from eth_utils import (
     is_address,
 )
 
-from ens import ENS
+from cns import CNS
 from ethpm._utils.registry import (
     fetch_standard_registry_abi,
 )
@@ -96,7 +96,7 @@ def parse_registry_uri(uri: str) -> RegistryURI:
         address_or_ens, chain_id = parsed_uri.netloc.split(":")
     else:
         address_or_ens, chain_id = parsed_uri.netloc, "1"
-    ns = ENS.fromWeb3(w3)
+    ns = CNS.fromWeb3(w3)
     if is_address(address_or_ens):
         address = address_or_ens
         ens = None

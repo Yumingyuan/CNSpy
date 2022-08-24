@@ -17,7 +17,7 @@ EMPTY_ADDR_HEX = HexAddress(HexStr("0x" + "00" * 20))
 
 REVERSE_REGISTRAR_DOMAIN = "addr.reverse"
 
-ENS_MAINNET_ADDR = ChecksumAddress(
+CNS_MAINNET_ADDR = ChecksumAddress(
     HexAddress(HexStr("0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e"))
 )
 

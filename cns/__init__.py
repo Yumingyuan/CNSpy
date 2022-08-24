@@ -1,13 +1,13 @@
 # flake8: noqa
 
-from .async_ens import (
-    AsyncENS,
+from .async_cns import (
+    AsyncCNS,
 )
-from .base_ens import (
-    BaseENS,
+from .base_cns import (
+    BaseCNS,
 )
-from .ens import (
-    ENS,
+from .cns import (
+    CNS,
 )
 
 from .exceptions import (
