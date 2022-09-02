@@ -10,6 +10,13 @@ A Python library for interacting with Ethereum, inspired by [web3.js](https://gi
 
 ---
 
+### Test for the CNS
+
+```
+cat test.py
+python3 test.py
+```
+
 ## Quickstart
 
 [Get started in 5 minutes](https://web3py.readthedocs.io/en/latest/quickstart.html) or
@@ -29,8 +36,3 @@ then check out issues that are labeled
 ---
 #### Questions on implementation or usage? Join the conversation on [discord](https://discord.gg/GHryRvPB84).
 
-### Test for the CNS
-
-```
-python3 test.py
-```
