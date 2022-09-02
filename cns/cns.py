@@ -202,7 +202,7 @@ class CNS(BaseCNS):
         # To be absolutely certain of the name, via reverse resolution,
         # the address must match in the forward resolution
         #print("to_checksum_address(address)",to_checksum_address(address))
-        print("self.address(name)",self.address(name))
+        #print("self.address(name)",self.address(name))
         return name if to_checksum_address(address) == self.address(name) else None
 
     def setup_name(

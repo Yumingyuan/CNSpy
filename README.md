@@ -13,6 +13,7 @@ A Python library for interacting with Ethereum, inspired by [web3.js](https://gi
 ### Test for the CNS
 
 ```
+export WEB3_PROVIDER_URI=https://evmtestnet.confluxrpc.com
 cat test.py
 python3 test.py
 ```
