@@ -28,3 +28,9 @@ then check out issues that are labeled
 
 ---
 #### Questions on implementation or usage? Join the conversation on [discord](https://discord.gg/GHryRvPB84).
+
+### Test for the CNS
+
+```
+python3 test.py
+```
