@@ -62,7 +62,7 @@ def ens_addresses(
     w3: "Web3", name_addr_pairs: Dict[str, ChecksumAddress]
 ) -> Iterator[None]:
     original_ens = w3.ens
-    w3.ens = cast(ENS, StaticENS(name_addr_pairs))
+    w3.ens = cast(CNS, StaticENS(name_addr_pairs))
     yield
     w3.ens = original_ens
 

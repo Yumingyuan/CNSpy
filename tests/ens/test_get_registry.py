@@ -3,7 +3,10 @@ from unittest.mock import (
     patch,
 )
 
-from cns import ENS
+import sys
+sys.path.append("../../../web3.py/")
+
+from cns import CNS
 from web3 import Web3
 
 
@@ -27,7 +30,8 @@ def test_resolver_empty(ens):
 )
 def test_reverse_domain(address, expected_reverse, address_conversion_func):
     address = address_conversion_func(address)
-    assert ENS.reverse_domain(address) == expected_reverse
+    assert CNS.reverse_domain(address) == expected_reverse
+    print(address);
 
 
 @pytest.mark.parametrize(

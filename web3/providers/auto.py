@@ -37,6 +37,7 @@ WS_SCHEMES = {"ws", "wss"}
 
 def load_provider_from_environment() -> BaseProvider:
     uri_string = URI(os.environ.get("WEB3_PROVIDER_URI", ""))
+    #print("uri string",uri_string)
     if not uri_string:
         return None
 
@@ -47,11 +48,15 @@ def load_provider_from_uri(
     uri_string: URI, headers: Optional[Dict[str, Tuple[str, str]]] = None
 ) -> BaseProvider:
     uri = urlparse(uri_string)
+    #print("uri in load_provider_from_uri",uri)
     if uri.scheme == "file":
+        print("get in file")
         return IPCProvider(uri.path)
     elif uri.scheme in HTTP_SCHEMES:
+        #print("get in http",HTTPProvider(uri_string, headers))
         return HTTPProvider(uri_string, headers)
     elif uri.scheme in WS_SCHEMES:
+        print("get in ws")
         return WebsocketProvider(uri_string)
     else:
         raise NotImplementedError(

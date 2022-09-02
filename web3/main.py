@@ -244,7 +244,7 @@ class Web3:
         external_modules: Optional[
             Dict[str, Union[Type[Module], Sequence[Any]]]
         ] = None,
-        ens: Union[CNS, AsyncCNS, "Empty"] = empty,
+        cns: Union[CNS, AsyncCNS, "Empty"] = empty,
     ) -> None:
         self.manager = self.RequestManager(self, provider, middlewares)
         # this codec gets used in the module initialization,
@@ -259,7 +259,7 @@ class Web3:
         if external_modules is not None:
             self.attach_modules(external_modules)
 
-        self.ens = ens
+        self.cns = cns
 
     @property
     def middleware_onion(self) -> MiddlewareOnion:
@@ -345,15 +345,15 @@ class Web3:
         return self.codec.is_encodable(_type, value)
 
     @property
-    def ens(self) -> Union[CNS, AsyncCNS, "Empty"]:
-        if self._ens is empty:
+    def cns(self) -> Union[CNS, AsyncCNS, "Empty"]:
+        if self._cns is empty:
             return AsyncCNS.fromWeb3(self) if self.eth.is_async else CNS.fromWeb3(self)
 
-        return self._ens
+        return self._cns
 
-    @ens.setter
-    def ens(self, new_ens: Union[CNS, AsyncCNS, "Empty"]) -> None:
-        self._ens = new_ens
+    @cns.setter
+    def cns(self, new_cns: Union[CNS, AsyncCNS, "Empty"]) -> None:
+        self._cns = new_cns
 
     @property
     def pm(self) -> "PM":

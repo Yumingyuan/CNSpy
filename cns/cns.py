@@ -127,6 +127,8 @@ class CNS(BaseCNS):
         :param str name: an ENS name to look up
         :raises InvalidName: if `name` has invalid syntax
         """
+        #print("cns->address()->ChecksumAddress",cast(ChecksumAddress, self._resolve(name, "addr")))
+        print(cast(ChecksumAddress, self._resolve(name, "addr")))
         return cast(ChecksumAddress, self._resolve(name, "addr"))
 
     def setup_address(
@@ -188,10 +190,19 @@ class CNS(BaseCNS):
         :type address: hex-string
         """
         reversed_domain = address_to_reverse_domain(address)
+        #print("reversed domain ",reversed_domain)
         name = self._resolve(reversed_domain, fn_name="name")
-
+        #print("name information",name)
+        if name.endswith(".cfx"):
+            pass
+        else:
+            name+=".cfx"
+        #name+=".cfx"
+        #print("name information",name)
         # To be absolutely certain of the name, via reverse resolution,
         # the address must match in the forward resolution
+        #print("to_checksum_address(address)",to_checksum_address(address))
+        print("self.address(name)",self.address(name))
         return name if to_checksum_address(address) == self.address(name) else None
 
     def setup_name(
@@ -442,6 +453,7 @@ class CNS(BaseCNS):
         self, name: str, fn_name: str = "addr"
     ) -> Optional[Union[ChecksumAddress, str]]:
         normal_name = normalize_name(name)
+        #print("_resolve()->normal_name",normal_name)
 
         resolver, current_name = self._get_resolver(normal_name, fn_name)
         if not resolver:
@@ -539,3 +551,4 @@ def _resolver_supports_interface(resolver: "Contract", interface_id: HexStr) -> 
     if not any("supportsInterface" in repr(func) for func in resolver.all_functions()):
         return False
     return resolver.caller.supportsInterface(interface_id)
+

@@ -43,7 +43,7 @@ from hexbytes import (
     HexBytes,
 )
 
-from cns import ENS
+from cns import CNS
 from web3._utils.encoding import (
     hexstr_if_str,
     text_if_str,
@@ -213,7 +213,7 @@ def abi_ens_resolver(w3: "Web3", type_str: TypeStr, val: Any) -> Tuple[TypeStr, 
                 " connection available"
             )
 
-        _ens = cast(ENS, w3.ens)
+        _ens = cast(CNS, w3.ens)
         if _ens is None:
             raise InvalidAddress(
                 f"Could not look up name {val!r} because ENS is" " set to None"
@@ -250,7 +250,7 @@ def normalize_abi(abi: Union[ABI, str]) -> ABI:
     return cast(ABI, abi)
 
 
-def normalize_address(ens: ENS, address: ChecksumAddress) -> ChecksumAddress:
+def normalize_address(ens: CNS, address: ChecksumAddress) -> ChecksumAddress:
     if address:
         if is_ens_name(address):
             validate_name_has_address(ens, address)

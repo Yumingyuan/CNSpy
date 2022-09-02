@@ -642,8 +642,8 @@ class Contract(BaseContract):
             )
 
         if address:
-            _ens = cast("CNS", _w3.ens)
-            self.address = normalize_address(_ens, address)
+            _cns = cast("CNS", _w3.cns)
+            self.address = normalize_address(_cns, address)
 
         if not self.address:
             raise TypeError(
@@ -674,7 +674,7 @@ class Contract(BaseContract):
 
         normalizers = {
             "abi": normalize_abi,
-            "address": partial(normalize_address, kwargs["w3"].ens),
+            "address": partial(normalize_address, kwargs["w3"].cns),
             "bytecode": normalize_bytecode,
             "bytecode_runtime": normalize_bytecode,
         }

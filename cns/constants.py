@@ -7,6 +7,7 @@ from hexbytes import (
     HexBytes,
 )
 
+
 ACCEPTABLE_STALE_HOURS = 48
 
 AUCTION_START_GAS_CONSTANT = 25000
@@ -17,8 +18,9 @@ EMPTY_ADDR_HEX = HexAddress(HexStr("0x" + "00" * 20))
 
 REVERSE_REGISTRAR_DOMAIN = "addr.reverse"
 
+
 CNS_MAINNET_ADDR = ChecksumAddress(
-    HexAddress(HexStr("0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e"))
+    HexAddress(HexStr("0xBf536C5042317B257BDf29e62CA80794238A9dFD"))
 )
 
 
