@@ -161,11 +161,12 @@ class CNS(BaseCNS):
             transact = {}
         transact = deepcopy(transact)
         owner = self.setup_owner(name, transact=transact)
-        self._assert_control(owner, name)
+        #self._assert_control(owner, name)
         if is_none_or_zero_address(address):
             address = None
         elif address is default:
             address = owner
+            print("default")
         elif is_binary_address(address):
             address = to_checksum_address(cast(str, address))
         elif not is_checksum_address(address):
@@ -175,7 +176,7 @@ class CNS(BaseCNS):
         if address is None:
             address = EMPTY_ADDR_HEX
         transact["from"] = owner
-
+        print("Trsact",transact)
         resolver: "Contract" = self._set_resolver(name, transact=transact)
         return resolver.functions.setAddr(raw_name_to_hash(name), address).transact(
             transact
@@ -487,7 +488,6 @@ class CNS(BaseCNS):
         name: str,
         parent_owned: Optional[str] = None,
     ) -> None:
-        print("length",len(self.w3.eth.accounts))
         if not address_in(account, self.w3.eth.accounts):
             raise UnauthorizedError(
                 f"in order to modify {name!r}, you must control account"

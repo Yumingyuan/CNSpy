@@ -4,7 +4,7 @@ import os
 from dotenv import find_dotenv, load_dotenv
 from cns.utils import Web3
 from conftest import w3
-from web3 import HTTPProvider
+from web3 import HTTPProvider, providers
 from eth_account import Account
 from eth_account.signers.local import LocalAccount
 from web3.auto import w3
@@ -23,10 +23,8 @@ if __name__=="__main__":
     # load .env file
     load_dotenv(find_dotenv('.env'))
     # import the RPC
-    provider = HTTPProvider(os.environ.get("RPC_URL"),)
-    #print(provider.isConnected())
+    provider = HTTPProvider(os.environ.get("RPC_URL"))
     account = get_Account_From_Env()
-    #w3.middleware_stack.add(construct_sign_and_send_raw_middleware('ENS_OWNER_PRIVATE_KEY'))
     #w3.middleware_onion.add(construct_sign_and_send_raw_middleware(account))
     #w3.eth.default_account = account.address
     #print(len(w3.middleware_onion))
@@ -38,17 +36,11 @@ if __name__=="__main__":
     ns = CNS(provider)
     result = ns.address('0xares.cfx')
     print(result)
-    #resolver_result = ns.resolver('conflux.cfx')
-    #print(resolver_result.address)
-    #result = ns.w3.eth.account.from_key(os.environ.get("PRIVATE_KEY"))
 
     address = ns.owner('miner.cfx')
     print("owner of miner.cfx",address)
 
-    #print("get result",result.address)
-    result = ns.w3.eth.account.privateKeyToAccount(os.environ.get("PRIVATE_KEY"))
-    print("private key to account",result)
-    #ns.w3.middleware_onion.add(construct_sign_and_send_raw_middleware(account))
+    ns.w3.middleware_onion.add(construct_sign_and_send_raw_middleware(account))
     ns.w3.eth.default_account=ns.w3.eth.account.privateKeyToAccount(os.environ.get("PRIVATE_KEY")).address
     #print("account.address",account.address)
     nft_address = ns.address("miner.cfx")
@@ -56,32 +48,25 @@ if __name__=="__main__":
     
     print("default account",ns.w3.eth.default_account)
 
-    ns.setup_address('miner.cfx','0xb75f07A2749a312496788a7b73fDD386EA529F2B')
+    email = ns.get_text('00000.cfx','email')
+    print("email of 00000.cfx",email)
+
+    avatar = ns.get_text('00000.cfx','avatar')
+    print("avatar of 00000.cfx",avatar)
+
+    twitter = ns.get_text('00000.cfx','twitter')
+    print("twitter of 00000.cfx",twitter)
+
+    description = ns.get_text('00000.cfx','description')
+    print("description of 00000.cfx",description)
+
+    github = ns.get_text('00000.cfx','github')
+    print("github of 00000.cfx",github)
+
+
+
+    #CNS._assert_control = lambda self, *args, **kwargs: None
+
+    #result = ns.setup_address('miner.cfx','0xb75f07A2749a312496788a7b73fDD386EA529F2B')
+    #print("setup_address result",result)
     
-
-'''
-    print("+++++++++++++++++++++++++++ Get the Address for an ENS Name +++++++++++++++++++++++++++")
-    eth_address = ns.address('ferf.cfx')
-    print(eth_address,"have registered for: ferf.cfx")
-    print("+++++++++++++++++++++++++ Get the Address for an ENS Name end +++++++++++++++++++++++++\n")
-
-    print("+++++++++++++++++++++++++++ Get the ENS Name for an Address +++++++++++++++++++++++++++")
-    domain = ns.name('0xb75f07A2749a312496788a7b73fDD386EA529F2B')
-    if domain is None:
-        print("Checking your reverse setting status!")
-    else:
-        print("0x103af2b33400a4f955744a7f70e749435444f808 hold",domain)
-    print("+++++++++++++++++++++++++ Get the ENS Name for an Address end +++++++++++++++++++++++++\n")
-
-    print("+++++++++++++++++++++++++++++++ Get the Owner of a Name +++++++++++++++++++++++++++++++")
-    cfx_address = ns.owner('0xares.cfx')
-    print(cfx_address,"owns 0xareas.cfx")
-    print("+++++++++++++++++++++++++++++ Get the Owner of a Name end +++++++++++++++++++++++++++++\n")
-
-    print("++++++++++++++++++++++++++++++ Link a Name to an Address +++++++++++++++++++++++++++++++")
-    try:
-        ns.setup_address('0xares.cfx')
-    except exceptions.UnauthorizedError:
-        print("You must control the account who owns 0xares.cfx")
-    print("++++++++++++++++++++++++++++ Link a Name to an Address end +++++++++++++++++++++++++++++\n")'''
-
