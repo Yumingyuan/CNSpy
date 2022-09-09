@@ -20,7 +20,7 @@ REVERSE_REGISTRAR_DOMAIN = "addr.reverse"
 
 
 CNS_MAINNET_ADDR = ChecksumAddress(
-    HexAddress(HexStr("0xBf536C5042317B257BDf29e62CA80794238A9dFD"))
+    HexAddress(HexStr("0xec3133E740FcAc8AC7212078522E3Ee3FFde0903"))
 )
 
 

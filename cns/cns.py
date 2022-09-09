@@ -487,6 +487,7 @@ class CNS(BaseCNS):
         name: str,
         parent_owned: Optional[str] = None,
     ) -> None:
+        print("length",len(self.w3.eth.accounts))
         if not address_in(account, self.w3.eth.accounts):
             raise UnauthorizedError(
                 f"in order to modify {name!r}, you must control account"

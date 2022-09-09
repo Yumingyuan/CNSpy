@@ -108,3 +108,6 @@ pip-wheel-metadata/
 
 # jupyter notebook files
 *.ipynb
+
+# environment file
+.env
