@@ -72,7 +72,7 @@ setup(
     long_description=long_description,
     author='Yumingze',
     author_email='timdavid@vip.qq.com',
-    url='https://github.com/ethereum/web3.py',
+    url='https://github.com/Yumingyuan/CNSpy',
     include_package_data=False,
     install_requires=[
         "aiohttp>=3.7.4.post0,<4",
@@ -98,7 +98,7 @@ setup(
     entry_points={"pytest11": ["pytest_ethereum = web3.tools.pytest_ethereum.plugins"]},
     license="MIT",
     zip_safe=False,
-    keywords='ethereum',
+    keywords='conflux espace',
     packages=find_packages(exclude=["tests", "tests.*"]),
     package_data={"web3": ["py.typed"]},
     classifiers=[

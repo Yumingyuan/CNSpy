@@ -4,7 +4,7 @@
 [![Discord](https://img.shields.io/discord/809793915578089484?color=blue&label=chat&logo=discord&logoColor=white)](https://discord.gg/GHryRvPB84)
 [![Build Status](https://circleci.com/gh/ethereum/web3.py.svg?style=shield)](https://circleci.com/gh/ethereum/web3.py)
 
-A Python library for interacting with Ethereum, inspired by [web3.js](https://github.com/ethereum/web3.js).
+A Python library for interacting with Conflux EVM network (Also called Conflux Esapce), inspired by [web3.py](https://github.com/ethereum/web3.py).
 
 * Python 3.7.2+ support
 
@@ -16,6 +16,13 @@ A Python library for interacting with Ethereum, inspired by [web3.js](https://gi
 export WEB3_PROVIDER_URI=https://evmtestnet.confluxrpc.com
 cat test.py
 python3 test.py
+```
+
+### Test mainnet CNS
+```
+echo "RPC_URL = https://evm.confluxrpc.com" > .env
+cat mainnet_test.py
+python3 mainnet_test.py
 ```
 
 ## Quickstart
