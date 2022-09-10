@@ -1,5 +1,5 @@
 [tool.towncrier]
-    package="web3"
+    package="cnspy-space"
     filename = "docs/releases.rst"
     directory = "newsfragments"
     underlines = ["-", "~", "^"]
